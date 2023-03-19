@@ -14,40 +14,40 @@ const Contacts = () => {
     { field: "registrarId", headerName: "Registrar ID" },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "姓名",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
       field: "age",
-      headerName: "Age",
+      headerName: "年龄",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
       field: "phone",
-      headerName: "Phone Number",
+      headerName: "手机号码",
       flex: 1,
     },
     {
       field: "email",
-      headerName: "Email",
+      headerName: "电子邮箱",
       flex: 1,
     },
     {
       field: "address",
-      headerName: "Address",
+      headerName: "地址",
       flex: 1,
     },
     {
       field: "city",
-      headerName: "City",
+      headerName: "城市",
       flex: 1,
     },
     {
       field: "zipCode",
-      headerName: "Zip Code",
+      headerName: "邮政编码",
       flex: 1,
     },
   ];
@@ -55,8 +55,8 @@ const Contacts = () => {
   return (
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="管理联系人"
+        subtitle="管理联系人和联系人列表"
       />
       <Box
         m="40px 0 0 0"
@@ -93,7 +93,7 @@ const Contacts = () => {
         <DataGrid
           rows={mockDataContacts}
           columns={columns}
-          components={{ Toolbar: GridToolbar }}
+          // components={{ Toolbar: GridToolbar }}
         />
       </Box>
     </Box>

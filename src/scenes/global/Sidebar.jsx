@@ -121,7 +121,7 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Data
+              数据
             </Typography>
             <Item
               title="联系人信息"
@@ -143,7 +143,7 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              页数
             </Typography>
             {/* <Item
               title="Profile Form"

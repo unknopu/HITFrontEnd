@@ -4,7 +4,7 @@ import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import StorageIcon from '@mui/icons-material/Storage';
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
@@ -99,7 +99,7 @@ const Dashboard = () => {
             progress="1.00"
             increase="100%"
             icon={
-              <PersonAddIcon
+              <EngineeringIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
