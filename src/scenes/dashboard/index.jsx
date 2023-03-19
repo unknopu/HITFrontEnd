@@ -22,7 +22,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="仪表盘" subtitle="欢迎使用仪表盘" />
 
         <Box>
           <Button
@@ -35,7 +35,7 @@ const Dashboard = () => {
             }}
           >
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Latest Report
+            下载最新报告
           </Button>
         </Box>
       </Box>
