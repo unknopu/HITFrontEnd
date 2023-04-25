@@ -13,10 +13,53 @@ import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import LanIcon from '@mui/icons-material/Lan';
+import apiHealthCheck from './healthcheck.jsx'
+import {createContext, useState} from "react";
+import axios from 'axios';
+// ==============================================
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [apiStatus, setApiStatus] = useState("0");
+  const [redisStatus, setRedisStatus] = useState("0");
+  const [mongoDBStatus, setMongoDBStatus] = useState("0");
+
+
+  // axios.get('https://kidscare-files.s3.ap-southeast-1.amazonaws.com/2023/3/22/906a8083-0a29-4bbf-95e3-274142336185_l.jpg')
+  // .then((response) => {
+  //   // console.log(response.data);
+  //   console.log(response.status);
+  //   console.log(response.statusText);
+  //   console.log(response.headers);
+  //   console.log(response.config);
+  // });
+  
+  const res = fetch("https://kidscare-files.s3.ap-southeast-1.amazonaws.com/2023/3/22/906a8083-0a29-4bbf-95e3-274142336185_l.jpg", {
+    responseType: "blob",
+  })
+  .then((response) => console.log(response))
+
+
+
+
+// ==============================================
+  if (mongoDBStatus == "0") {
+    apiHealthCheck("/mongodb").then(jsondata => {
+      jsondata['is_healthy']==true ? setMongoDBStatus("100"):setMongoDBStatus("0") 
+    });
+  }
+  if (redisStatus == "0") {
+    apiHealthCheck("/redis").then(jsondata => {
+      jsondata['is_healthy']==true ? setRedisStatus("100"):setRedisStatus("0") 
+    });
+  }
+  if (apiStatus == "0") {
+    apiHealthCheck("/healthcheck").then(jsondata => {
+      jsondata['is_healthy']==true ? setApiStatus("100"):setApiStatus("0") 
+    });
+  }
+// ==============================================
 
   return (
     <Box m="20px">
@@ -57,9 +100,9 @@ const Dashboard = () => {
         >
           <StatBox
             title="Mongo数据库状态"
-            subtitle="健康"
-            progress="1.00"
-            increase="100%"
+            subtitle={mongoDBStatus=="100"? "健康": "不健康"}
+            progress={mongoDBStatus}
+            increase={`${mongoDBStatus}%`}
             icon={
               <StorageIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -76,9 +119,9 @@ const Dashboard = () => {
         >
           <StatBox
             title="Redis数据库状态"
-            subtitle="不健康"
-            progress="0"
-            increase="0%"
+            subtitle={redisStatus=="100"? "健康": "不健康"}
+            progress={redisStatus}
+            increase={`${redisStatus}%`}
             icon={
               <LanIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -95,9 +138,9 @@ const Dashboard = () => {
         >
           <StatBox
             title="后端状态"
-            subtitle="健康"
-            progress="1.00"
-            increase="100%"
+            subtitle={apiStatus=="100"? "健康": "不健康"}
+            progress={apiStatus}
+            increase={`${apiStatus}%`}
             icon={
               <EngineeringIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -126,7 +169,7 @@ const Dashboard = () => {
         </Box> */}
 
         {/* ROW 2 */}
-        {/* <Box
+        <Box
           gridColumn="span 8"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -140,34 +183,64 @@ const Dashboard = () => {
           >
             <Box>
               <Typography
-                variant="h5"
+                variant="h4"
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                已识别的漏洞
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                一共：xxxx
               </Typography>
             </Box>
             <Box>
-              <IconButton>
-                <DownloadOutlinedIcon
+              {/* <IconButton> */}
+                {/* <DownloadOutlinedIcon
                   sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
-                />
-              </IconButton>
+                /> */}
+              {/* </IconButton> */}
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
             <LineChart isDashboard={true} />
           </Box>
-        </Box> */}
-        {/* <Box
+        </Box>
+
+        {/* ROW 风险级别 */}
+        <Box
           gridColumn="span 4"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          p="30px"
+        >
+          <Typography variant="h4" fontWeight="600">
+            风险级别
+          </Typography>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            mt="25px"
+          >
+            <ProgressCircle size="125" />
+            <Typography
+              variant="h5"
+              color={colors.greenAccent[500]}
+              sx={{ mt: "15px" }}
+            >
+              High
+            </Typography>
+            <Typography>本报告是根据 OWASP Top Ten 2021 分类生成的。</Typography>
+          </Box>
+        </Box>
+
+        {/* ROW 2.2 */}
+        <Box
+          gridColumn="span 12"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           overflow="auto"
@@ -215,35 +288,11 @@ const Dashboard = () => {
               </Box>
             </Box>
           ))}
-        </Box> */}
+        </Box>
 
-        {/* ROW 3 */}
-        {/* <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          p="30px"
-        >
-          <Typography variant="h5" fontWeight="600">
-            Campaign
-          </Typography>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            mt="25px"
-          >
-            <ProgressCircle size="125" />
-            <Typography
-              variant="h5"
-              color={colors.greenAccent[500]}
-              sx={{ mt: "15px" }}
-            >
-              $48,352 revenue generated
-            </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
-          </Box>
-        </Box> */}
+        
+
+        {/* Bar chart */}
         {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -260,6 +309,7 @@ const Dashboard = () => {
             <BarChart isDashboard={true} />
           </Box>
         </Box> */}
+
         {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
