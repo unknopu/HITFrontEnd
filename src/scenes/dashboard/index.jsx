@@ -14,6 +14,7 @@ import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import LanIcon from '@mui/icons-material/Lan';
 import apiHealthCheck from './healthcheck.jsx'
+import {myrisk, mylevel, myrisklevel} from './utils.jsx'
 import {createContext, useState} from "react";
 import axios from 'axios';
 // ==============================================
@@ -24,9 +25,9 @@ const Dashboard = () => {
   const [apiStatus, setApiStatus] = useState("0");
   const [redisStatus, setRedisStatus] = useState("0");
   const [mongoDBStatus, setMongoDBStatus] = useState("0");
+  const [riskLevel, setRiskLevel] = useState(0);
 
-
-  // axios.get('https://kidscare-files.s3.ap-southeast-1.amazonaws.com/2023/3/22/906a8083-0a29-4bbf-95e3-274142336185_l.jpg')
+  // axios.get('ปปปป')
   // .then((response) => {
   //   // console.log(response.data);
   //   console.log(response.status);
@@ -35,10 +36,10 @@ const Dashboard = () => {
   //   console.log(response.config);
   // });
   
-  const res = fetch("https://kidscare-files.s3.ap-southeast-1.amazonaws.com/2023/3/22/906a8083-0a29-4bbf-95e3-274142336185_l.jpg", {
-    responseType: "blob",
-  })
-  .then((response) => console.log(response))
+  // const res = fetch("ปปปปป", {
+  //   responseType: "blob",
+  // })
+  // .then((response) => console.log(response))
 
 
 
@@ -70,7 +71,7 @@ const Dashboard = () => {
         <Box>
           <Button
             sx={{
-              backgroundColor: colors.blueAccent[700],
+              backgroundColor: colors.blueAccent[300],
               color: colors.grey[100],
               fontSize: "14px",
               fontWeight: "bold",
@@ -148,26 +149,7 @@ const Dashboard = () => {
             }
           />
         </Box>
-        {/* <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
-            icon={
-              <TrafficIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box> */}
-
+        
         {/* ROW 2 */}
         <Box
           gridColumn="span 8"
@@ -187,22 +169,17 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                已识别的漏洞
+                已识别的漏洞类型
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                一共：xxxx
+                一共：6
               </Typography>
             </Box>
             <Box>
-              {/* <IconButton> */}
-                {/* <DownloadOutlinedIcon
-                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
-                /> */}
-              {/* </IconButton> */}
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
@@ -226,13 +203,14 @@ const Dashboard = () => {
             alignItems="center"
             mt="25px"
           >
-            <ProgressCircle size="125" />
+            <ProgressCircle size="125" progress={myrisk(0.7)}/>
             <Typography
               variant="h5"
               color={colors.greenAccent[500]}
               sx={{ mt: "15px" }}
             >
-              High
+              {/* {myrisklevel(riskLevel)} */}
+              HIHG
             </Typography>
             <Typography>本报告是根据 OWASP Top Ten 2021 分类生成的。</Typography>
           </Box>
@@ -252,9 +230,15 @@ const Dashboard = () => {
             borderBottom={`4px solid ${colors.primary[500]}`}
             colors={colors.grey[100]}
             p="15px"
+
           >
-            <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+            <Typography 
+              color={colors.grey[100]} 
+              variant="h3" 
+              fontWeight="700" 
+              padding="0.1rem"
+            >
+            <h4>已确定的漏洞</h4>
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
@@ -265,6 +249,8 @@ const Dashboard = () => {
               alignItems="center"
               borderBottom={`4px solid ${colors.primary[500]}`}
               p="15px"
+              borderRadius="1rem"
+
             >
               <Box>
                 <Typography
@@ -275,58 +261,33 @@ const Dashboard = () => {
                   {transaction.txId}
                 </Typography>
                 <Typography color={colors.grey[100]}>
-                  {transaction.user}
+                  {transaction.type} 
                 </Typography>
+                <Box 
+                color={colors.grey[100]}
+                backgroundColor={mylevel(colors, transaction.level)}
+                borderRadius="2rem"
+                padding=".3rem"
+                paddingLeft="1rem"
+                width="35rem"
+              >
+                ({transaction.vulnerability})
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
+              </Box>
+              
               <Box
-                backgroundColor={colors.greenAccent[500]}
+                backgroundColor={mylevel(colors, transaction.level)}
                 p="5px 10px"
                 borderRadius="4px"
+                width="6rem"
+                padding="1rem"
+                textAlign="center"
               >
-                ${transaction.cost}
+                {transaction.level}
               </Box>
             </Box>
           ))}
         </Box>
-
-        
-
-        {/* Bar chart */}
-        {/* <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
-          >
-            Sales Quantity
-          </Typography>
-          <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
-          </Box>
-        </Box> */}
-
-        {/* <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          padding="30px"
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ marginBottom: "15px" }}
-          >
-            Geography Based Traffic
-          </Typography>
-          <Box height="200px">
-            <GeographyChart isDashboard={true} />
-          </Box>
-        </Box> */}
       </Box>
     </Box>
   );

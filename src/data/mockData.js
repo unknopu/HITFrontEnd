@@ -269,52 +269,28 @@ export const mockDataInvoices = [
 export const mockTransactions = [
   {
     txId: "01e4dsa",
-    user: "johndoe",
-    date: "2021-09-01",
-    cost: "43.95",
+    type: "INJECTION",
+    vulnerability: "Blind Cross-site Scripting",
+    level: "CRITICAL",
   },
   {
     txId: "0315dsaa",
-    user: "jackdower",
-    date: "2022-04-01",
-    cost: "133.45",
+    type: "INJECTION",
+    vulnerability: "Boolean Based SQL Injection",
+    level: "LOW",
   },
   {
     txId: "01e4dsa",
-    user: "aberdohnny",
-    date: "2021-09-01",
-    cost: "43.95",
+    type: "BROKEN ACCESS CONTROL",
+    vulnerability: "Local File Inclusion",
+    level: "HIHG",
   },
   {
     txId: "51034szv",
-    user: "goodmanave",
-    date: "2022-11-05",
-    cost: "200.95",
-  },
-  {
-    txId: "0a123sb",
-    user: "stevebower",
-    date: "2022-11-02",
-    cost: "13.55",
-  },
-  {
-    txId: "01e4dsa",
-    user: "aberdohnny",
-    date: "2021-09-01",
-    cost: "43.95",
-  },
-  {
-    txId: "120s51a",
-    user: "wootzifer",
-    date: "2019-04-15",
-    cost: "24.20",
-  },
-  {
-    txId: "0315dsaa",
-    user: "jackdower",
-    date: "2022-04-01",
-    cost: "133.45",
-  },
+    type: "CRYPTOGRAPHIC FAILURES",
+    vulnerability: "SSL/TLS Not Implemented",
+    level: "MEDIUM",
+  }
 ];
 
 export const mockBarData = [
@@ -435,17 +411,17 @@ export const mockLineData = [
     id: "test.com",
     color: tokens("dark").greenAccent[500],
     data: [
-      {
-        x: "ACCESS CONTROL",
-        y: 4,
-      },
+      // {
+      //   x: "ACCESS CONTROL",
+      //   y: 4,
+      // },
       {
         x: "CRYPTOGRAPHIC",
-        y: 3,
+        y: 2,
       },
       {
         x: "INJECTION",
-        y: 7,
+        y: 4,
       },
       {
         x: "MISCONFIGURATION",
@@ -453,12 +429,12 @@ export const mockLineData = [
       },
       {
         x: "OUTDATED",
-        y: 3,
+        y: 1,
       },
-      {
-        x: "REQUEST FORGERY",
-        y: 2,
-      },
+      // {
+      //   x: "REQUEST FORGERY",
+      //   y: 2,
+      // },
     ],
   },
   // {

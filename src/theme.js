@@ -104,7 +104,8 @@ export const tokens = (mode) => ({
           600: "#e2726e",
           700: "#e99592",
           800: "#f1b9b7",
-          900: "#f8dcdb",
+          900: "#FFA500",
+          1000: "#ffff00",
         },
         blueAccent: {
           100: "#151632",
@@ -130,14 +131,14 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              main: colors.primary[500],
+              main: colors.primary[300],
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: colors.greenAccent[300],
             },
             neutral: {
-              dark: colors.grey[700],
-              main: colors.grey[500],
+              dark: colors.grey[400],
+              main: colors.grey[300],
               light: colors.grey[100],
             },
             background: {
@@ -199,12 +200,12 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState("light");
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () =>
-        setMode((prev) => (prev === "light" ? "dark" : "light")),
+        setMode((prev) => (prev === "light" ? "light" : "light")),
     }),
     []
   );
@@ -212,3 +213,5 @@ export const useMode = () => {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
 };
+
+
