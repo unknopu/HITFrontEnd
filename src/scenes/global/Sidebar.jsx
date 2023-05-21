@@ -144,13 +144,13 @@ const Sidebar = () => {
             >
               页数
             </Typography>
-            {/* <Item
-              title="Profile Form"
+            <Item
+              title="输入目标形式"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
+            />
             <Item
               title="FAQ 页"
               to="/faq"

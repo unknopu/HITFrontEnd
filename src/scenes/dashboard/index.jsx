@@ -238,7 +238,7 @@ const Dashboard = () => {
               fontWeight="700" 
               padding="0.1rem"
             >
-            <h4>已确定的漏洞</h4>
+            <h4>已确定的漏洞 (一共：9)</h4>
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
