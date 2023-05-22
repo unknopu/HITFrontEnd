@@ -104,5 +104,5 @@ export function mapTransaction(sqli, lfi, missConfig, xss, outeddateComponents, 
             sortList.indexOf(a.level) - sortList.indexOf(b.level)
         );
     });
-    return sortedObj;
+    return Transactions;
 }

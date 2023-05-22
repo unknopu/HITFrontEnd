@@ -28,6 +28,7 @@ const Dashboard = () => {
   const [lineData, setLineData] = useState([0,1,2,3,4]);
 
 
+  const [data, setData] = useState([]);
   const [sqli, setSqli] = useState([]);
   const [fli, setLfi] = useState([]);
   const [missConfig, setMissConfig] = useState([]);
@@ -50,12 +51,26 @@ const Dashboard = () => {
             result.page_information.type_outdated_components
           ])
 
-          setSqli(result.sqli.entities)
-          setLfi(result.lfi.entities)
-          setMissConfig(result.miss_config.entities)
-          setXss(result.xss.entities)
-          setOuteddateComponents(result.outdated_component.entities)
-          setCtyptoFailure(result.crypto_failure.entities)
+          setData(result)
+          
+          if (result.sqli != null) {
+            setSqli(result.sqli.entities)
+          }
+          if (result.lfi != null) {
+            setLfi(result.lfi.entities)
+          }
+          if (result.miss_config != null) {
+            setMissConfig(result.miss_config.entities)
+          }
+          if (result.xss != null) {
+            setXss(result.xss.entities)
+          }
+          if (result.outdated_component != null) {
+            setOuteddateComponents(result.outdated_component.entities)
+          }
+          if (result.crypto_failure != null) {
+            setCtyptoFailure(result.crypto_failure.entities)
+          }
         },
         (error) => {
           console.log(error)
@@ -63,6 +78,8 @@ const Dashboard = () => {
       )
   }, [])
 
+  // var jsonData = JSON.parse(data)
+  // console.log(jsonData)
   var datamapped = mapTransaction(sqli, fli, missConfig, xss, outeddateComponents, cryptoFailure)
 
 // ==============================================
