@@ -14,9 +14,10 @@ import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import LanIcon from '@mui/icons-material/Lan';
 import apiHealthCheck from './healthcheck.jsx'
-import {myrisk, mylevel, myrisklevel} from './utils.jsx'
-import {createContext, useState} from "react";
+import {myrisk, mylevel, myrisklevel, getLatestReport} from './utils.jsx'
+import {createContext, useState, useEffect} from "react";
 import axios from 'axios';
+
 // ==============================================
 
 const Dashboard = () => {
@@ -25,25 +26,36 @@ const Dashboard = () => {
   const [apiStatus, setApiStatus] = useState("0");
   const [redisStatus, setRedisStatus] = useState("0");
   const [mongoDBStatus, setMongoDBStatus] = useState("0");
-  const [riskLevel, setRiskLevel] = useState(0);
-
-  // axios.get('ปปปป')
-  // .then((response) => {
-  //   // console.log(response.data);
-  //   console.log(response.status);
-  //   console.log(response.statusText);
-  //   console.log(response.headers);
-  //   console.log(response.config);
-  // });
   
-  // const res = fetch("ปปปปป", {
-  //   responseType: "blob",
-  // })
-  // .then((response) => console.log(response))
+  const [riskLevel, setRiskLevel] = useState(0);
+  const [knownVul, setKnownVul] = useState(0);
+  const [allVul, setAllVul] = useState(0);
+
+  useEffect(() => {
+    fetch(`http://helmtail.tech/api/v1/report/latest`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setRiskLevel(result.page_information.risk_rate)
+          setKnownVul(
+            result.page_information.type_injection
+            +result.page_information.type_broken_access_control
+            +result.page_information.type_crypto_failure
+            +result.page_information.type_miss_configuration
+            +result.page_information.type_outdated_components
+            )
+          setAllVul(result.page_information.total_number_of_vulnerability)
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+  }, [])
 
 
 
-
+  console.log()
+  
 // ==============================================
   if (mongoDBStatus == "0") {
     apiHealthCheck("/mongodb").then(jsondata => {
@@ -176,7 +188,7 @@ const Dashboard = () => {
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                一共：6
+                一共：{knownVul}
               </Typography>
             </Box>
             <Box>
@@ -203,7 +215,7 @@ const Dashboard = () => {
             alignItems="center"
             mt="25px"
           >
-            <ProgressCircle size="125" progress={myrisk(0.7)}/>
+            <ProgressCircle size="125" progress={myrisk(riskLevel)}/>
             <Typography
               variant="h5"
               color={colors.greenAccent[500]}
@@ -238,7 +250,7 @@ const Dashboard = () => {
               fontWeight="700" 
               padding="0.1rem"
             >
-            <h4>已确定的漏洞 (一共：9)</h4>
+            <h4>已确定的漏洞 (一共：{allVul})</h4>
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (

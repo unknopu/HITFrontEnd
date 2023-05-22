@@ -4,7 +4,6 @@ import { ApiStatusContext } from "./index.jsx"
 var url = "http://helmtail.tech/api/v1/me"
 
 
-
 function apiHealthCheck(pathcheck) {
     const response = fetch(url+pathcheck).
     then((response) => response.json()).
@@ -13,3 +12,5 @@ function apiHealthCheck(pathcheck) {
 }
 
 export default apiHealthCheck;
+
+

@@ -1,6 +1,8 @@
+import axios from 'axios';
 
 export function myrisk(test) {
-    return 1-test
+    console.log(test)
+    return 1-(test/100)
 }
 export function mylevel(colors, test) {
     if (test == "CRITICAL"){
@@ -33,4 +35,14 @@ export function myrisklevel(value) {
         return "LOW"
     }
     return "INFORMATION"+value
+}
+
+var getReport = "helmtail.tech/api/v1/report/latest"
+export function getLatestReport() {
+    axios.get(getReport)
+        .then((res) => {
+            window.location.reload(true);
+        }).catch((error) => {
+            window.location.reload(false);
+        });
 }
