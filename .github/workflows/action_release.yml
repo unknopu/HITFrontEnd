@@ -1,0 +1,22 @@
+---
+name: 01 Basic Dcoker Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "develop" ]
+  
+jobs:
+  trigger-build:
+    name: trigger-build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: curl
+      uses: wei/curl@v1
+      with:
+        args: -I -u ${{ secrets.JENKINS_USER }} ${{ secrets.JENKINS_JOB }}
