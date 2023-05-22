@@ -123,7 +123,7 @@ const Sidebar = () => {
               数据
             </Typography>
             <Item
-              title="联系人信息"
+              title="报告历史"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}

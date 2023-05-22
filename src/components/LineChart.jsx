@@ -1,15 +1,45 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { mockLineData as data } from "../data/mockData";
+// import { mockLineData as data } from "../data/mockData";
 
-const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
+const LineChart = ({ isCustomLineColors = false, isDashboard = false , linedata}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  var mockLineData = [
+    {
+      id: "test.com",
+      color: tokens("dark").greenAccent[500],
+
+      data: [
+        {
+          x: "INJECTION",
+          y: linedata[0],
+        },
+        {
+          x: "BROKEN ACCESS",
+          y: linedata[1],
+        },
+        {
+          x: "CRYPTOGRAPHIC",
+          y: linedata[2],
+        },
+        {
+          x: "MISCONFIGURATION",
+          y: linedata[3],
+        },
+        {
+          x: "OUTDATED",
+          y: linedata[4],
+        },
+      ],
+    },
+  ]
+
   return (
     <ResponsiveLine
-      data={data}
+      data={mockLineData}
       theme={{
         axis: {
           domain: {

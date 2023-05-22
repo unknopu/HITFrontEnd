@@ -10,53 +10,48 @@ const Contacts = () => {
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "number", headerName: "行号", flex: 0.5 },
     { field: "registrarId", headerName: "Registrar ID" },
     {
-      field: "name",
-      headerName: "姓名",
+      field: "report id",
+      headerName: "报告编号",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "年龄",
+      field: "update at",
+      headerName: "更新于",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "手机号码",
+      field: "target",
+      headerName: "目标",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "电子邮箱",
+      field: "risk rate",
+      headerName: "风险率",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "地址",
+      field: "vulnerabilities",
+      headerName: "漏洞",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "城市",
+      field: "detail",
+      headerName: "detail",
       flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "邮政编码",
-      flex: 1,
-    },
+    }
   ];
 
   return (
     <Box m="20px">
       <Header
-        title="管理联系人"
-        subtitle="管理联系人和联系人列表"
+        title="报告历史"
+        subtitle="报告历史"
       />
       <Box
         m="40px 0 0 0"

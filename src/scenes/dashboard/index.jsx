@@ -1,22 +1,17 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import StorageIcon from '@mui/icons-material/Storage';
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import EngineeringIcon from '@mui/icons-material/Engineering';
-import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
-import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import LanIcon from '@mui/icons-material/Lan';
 import apiHealthCheck from './healthcheck.jsx'
-import {myrisk, mylevel, myrisklevel, getLatestReport} from './utils.jsx'
-import {createContext, useState, useEffect} from "react";
-import axios from 'axios';
+import {myrisk, mylevel, mapTransaction} from './utils.jsx'
+import {useState, useEffect} from "react";
 
 // ==============================================
 
@@ -28,8 +23,17 @@ const Dashboard = () => {
   const [mongoDBStatus, setMongoDBStatus] = useState("0");
   
   const [riskLevel, setRiskLevel] = useState(0);
-  const [knownVul, setKnownVul] = useState(0);
   const [allVul, setAllVul] = useState(0);
+  const [reportID, setReportID] = useState("0000000000000000");
+  const [lineData, setLineData] = useState([0,1,2,3,4]);
+
+
+  const [sqli, setSqli] = useState([]);
+  const [fli, setLfi] = useState([]);
+  const [missConfig, setMissConfig] = useState([]);
+  const [xss, setXss] = useState([]);
+  const [outeddateComponents, setOuteddateComponents] = useState([]);
+  const [cryptoFailure, setCtyptoFailure] = useState([]);
 
   useEffect(() => {
     fetch(`http://helmtail.tech/api/v1/report/latest`)
@@ -37,14 +41,21 @@ const Dashboard = () => {
       .then(
         (result) => {
           setRiskLevel(result.page_information.risk_rate)
-          setKnownVul(
-            result.page_information.type_injection
-            +result.page_information.type_broken_access_control
-            +result.page_information.type_crypto_failure
-            +result.page_information.type_miss_configuration
-            +result.page_information.type_outdated_components
-            )
           setAllVul(result.page_information.total_number_of_vulnerability)
+          setReportID(result.id)
+          setLineData([result.page_information.type_injection,
+            result.page_information.type_broken_access_control,
+            result.page_information.type_crypto_failure,
+            result.page_information.type_miss_configuration,
+            result.page_information.type_outdated_components
+          ])
+
+          setSqli(result.sqli.entities)
+          setLfi(result.lfi.entities)
+          setMissConfig(result.miss_config.entities)
+          setXss(result.xss.entities)
+          setOuteddateComponents(result.outdated_component.entities)
+          setCtyptoFailure(result.crypto_failure.entities)
         },
         (error) => {
           console.log(error)
@@ -52,10 +63,8 @@ const Dashboard = () => {
       )
   }, [])
 
+  var datamapped = mapTransaction(sqli, fli, missConfig, xss, outeddateComponents, cryptoFailure)
 
-
-  console.log()
-  
 // ==============================================
   if (mongoDBStatus == "0") {
     apiHealthCheck("/mongodb").then(jsondata => {
@@ -188,14 +197,14 @@ const Dashboard = () => {
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                一共：{knownVul}
+                报告编号：{reportID}
               </Typography>
             </Box>
             <Box>
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <LineChart isDashboard={true} linedata={lineData}/>
           </Box>
         </Box>
 
@@ -253,7 +262,7 @@ const Dashboard = () => {
             <h4>已确定的漏洞 (一共：{allVul})</h4>
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
+          {datamapped.map((transaction, i) => (
             <Box
               key={`${transaction.txId}-${i}`}
               display="flex"
