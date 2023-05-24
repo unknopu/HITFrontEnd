@@ -85,23 +85,17 @@ const Dashboard = () => {
 // ==============================================
   if (mongoDBStatus == "0") {
     apiHealthCheck("/mongodb").then(jsondata => {
-      if (jsondata['is_healthy'] != null) {
         jsondata['is_healthy']==true ? setMongoDBStatus("100"):setMongoDBStatus("0") 
-      }
     });
   }
   if (redisStatus == "0") {
     apiHealthCheck("/redis").then(jsondata => {
-      if (jsondata['is_healthy'] != null) {
         jsondata['is_healthy']==true ? setRedisStatus("100"):setRedisStatus("0") 
-      }
     });
   }
   if (apiStatus == "0") {
     apiHealthCheck("/healthcheck").then(jsondata => {
-      if (jsondata['is_healthy'] != null) {
         jsondata['is_healthy']==true ? setApiStatus("100"):setApiStatus("0") 
-      }
     });
   }
 // ==============================================
