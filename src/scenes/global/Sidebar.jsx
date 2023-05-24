@@ -85,9 +85,9 @@ const Sidebar = () => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
-                  width="148px"
-                  height="130px"
-                  src={`../../assets/user.png`}
+                  width="168px"
+                  height="158px"
+                  src={`https://pica.zhimg.com/v2-38ecb6ac0c8139003677305f804cf6be_1440w.jpg?source=172ae18b`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -109,7 +109,7 @@ const Sidebar = () => {
           <Box >
             <Item
               title="仪表盘场景"
-              to="/"
+              to="/w/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -124,18 +124,11 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="报告历史"
-              to="/contacts"
+              to="/w/history"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            {/* <Item
-              title="Invoices Balances"
-              to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
 
             <Typography
               variant="h6"
@@ -146,14 +139,14 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="输入目标形式"
-              to="/form"
+              to="/w/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="FAQ 页"
-              to="/faq"
+              to="/w/qa"
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
