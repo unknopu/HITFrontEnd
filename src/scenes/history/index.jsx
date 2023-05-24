@@ -10,16 +10,16 @@ const Contacts = () => {
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "number", headerName: "行号", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "id", headerName: "行号", flex: 0.5 },
+    { field: "registrar", headerName: "Registrar ID"},
     {
-      field: "report id",
+      field: "report_id",
       headerName: "报告编号",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "update at",
+      field: "update_at",
       headerName: "更新于",
       type: "number",
       headerAlign: "left",
@@ -31,7 +31,7 @@ const Contacts = () => {
       flex: 1,
     },
     {
-      field: "risk rate",
+      field: "risk_rate",
       headerName: "风险率",
       flex: 1,
     },
