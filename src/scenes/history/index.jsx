@@ -1,52 +1,105 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import {useState, useEffect} from "react";
 
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data, setData] = useState([]);
 
   const columns = [
-    { field: "id", headerName: "行号", flex: 0.5 },
-    { field: "registrar", headerName: "Registrar ID"},
+    { 
+      field: "id", 
+      headerName: "行号", 
+      flex: 0.5 ,
+      headerAlign: "center",
+      align: "center",
+    },
+    { 
+      field: "registrar", 
+      headerName: "Registrar ID",
+      headerAlign: "center",
+      align: "center",
+    },
     {
       field: "report_id",
       headerName: "报告编号",
       flex: 1,
       cellClassName: "name-column--cell",
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "update_at",
       headerName: "更新于",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      headerAlign: "center",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
     },
     {
       field: "target",
       headerName: "目标",
-      flex: 1,
+      flex: 2.3,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "risk_rate",
       headerName: "风险率",
-      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      flex: 0.5,
     },
     {
       field: "vulnerabilities",
       headerName: "漏洞",
-      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      flex: 0.5,
     },
     {
       field: "detail",
       headerName: "detail",
+      headerAlign: "center",
+      align: "center",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
     }
   ];
 
+  var dataHistory = []
+  useEffect(() => {
+    fetch(`http://helmtail.tech/api/v1/report/history`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          if (result.length > 0) {
+            for (let i = 0; i < result.length; i++) {
+              dataHistory.push({
+                  id: i+1,
+                  registrar: "admin",
+                  report_id: result[i].id,
+                  update_at: result[i].updated_at,
+                  target: result[i].url,
+                  risk_rate: result[i].page_information.risk_rate + "%",
+                  vulnerabilities: result[i].page_information.total_number_of_vulnerability,
+                  detail: "",
+              })
+            }
+          }
+          setData(dataHistory)
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+  }, [])
+  
   return (
     <Box m="20px">
       <Header
@@ -86,7 +139,7 @@ const Contacts = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={data}
           columns={columns}
           // components={{ Toolbar: GridToolbar }}
         />
