@@ -78,17 +78,19 @@ const Contacts = () => {
       .then(res => res.json())
       .then(
         (result) => {
+          setData([])
           if (result.length > 0) {
+            dataHistory = []
             for (let i = 0; i < result.length; i++) {
               dataHistory.push({
-                  id: i+1,
-                  registrar: "admin",
-                  report_id: result[i].id,
-                  update_at: result[i].updated_at,
-                  target: result[i].url,
-                  risk_rate: result[i].page_information.risk_rate + "%",
-                  vulnerabilities: result[i].page_information.total_number_of_vulnerability,
-                  detail: "",
+                id: i+1,
+                registrar: "admin",
+                report_id: result[i].id,
+                update_at: result[i].updated_at,
+                target: result[i].url,
+                risk_rate: result[i].page_information.risk_rate + "%",
+                vulnerabilities: result[i].page_information.total_number_of_vulnerability,
+                detail: "",
               })
             }
           }
@@ -141,7 +143,6 @@ const Contacts = () => {
         <DataGrid
           rows={data}
           columns={columns}
-          // components={{ Toolbar: GridToolbar }}
         />
       </Box>
     </Box>
