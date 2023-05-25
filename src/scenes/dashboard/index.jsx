@@ -77,26 +77,27 @@ const Dashboard = () => {
       )
   }, [])
 
-  // var jsonData = JSON.parse(data)
-  // console.log(jsonData)
   var datamapped = mapTransaction(sqli, fli, missConfig, xss, outeddateComponents, cryptoFailure)
 
 // ==============================================
-  if (mongoDBStatus == "0") {
-    apiHealthCheck("/mongodb").then(jsondata => {
-        jsondata['is_healthy']==true ? setMongoDBStatus("100"):setMongoDBStatus("0") 
-    });
-  }
-  if (redisStatus == "0") {
-    apiHealthCheck("/redis").then(jsondata => {
-        jsondata['is_healthy']==true ? setRedisStatus("100"):setRedisStatus("0") 
-    });
-  }
-  if (apiStatus == "0") {
-    apiHealthCheck("/healthcheck").then(jsondata => {
-        jsondata['is_healthy']==true ? setApiStatus("100"):setApiStatus("0") 
-    });
-  }
+  // if (mongoDBStatus == "0") {
+  //   apiHealthCheck("/mongodb").then(jsondata => {
+  //       jsondata['is_healthy']==true ? setMongoDBStatus("100"):setMongoDBStatus("0") 
+  //   });
+  // }
+  // if (redisStatus == "0") {
+  //   apiHealthCheck("/redis").then(jsondata => {
+  //       jsondata['is_healthy']==true ? setRedisStatus("100"):setRedisStatus("0") 
+  //   });
+  // }
+  // if (apiStatus == "0") {
+  //   apiHealthCheck("/healthcheck").then(jsondata => {
+  //       jsondata['is_healthy']==true ? setApiStatus("100"):setApiStatus("0") 
+  //   });
+  // }
+  setMongoDBStatus("100")
+  setRedisStatus("0")
+  setApiStatus("100")
 // ==============================================
 
   return (
