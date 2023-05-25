@@ -17,9 +17,9 @@ import {useState, useEffect} from "react";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [apiStatus, setApiStatus] = useState("0");
+  const [apiStatus, setApiStatus] = useState("100");
   const [redisStatus, setRedisStatus] = useState("0");
-  const [mongoDBStatus, setMongoDBStatus] = useState("0");
+  const [mongoDBStatus, setMongoDBStatus] = useState("100");
   
   const [riskLevel, setRiskLevel] = useState(0);
   const [allVul, setAllVul] = useState(0);
@@ -95,9 +95,6 @@ const Dashboard = () => {
   //       jsondata['is_healthy']==true ? setApiStatus("100"):setApiStatus("0") 
   //   });
   // }
-  setMongoDBStatus("100")
-  setRedisStatus("0")
-  setApiStatus("100")
 // ==============================================
 
   return (
