@@ -4,6 +4,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { handleFormSubmit } from "./submitForm";
+import React  from 'react';
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
